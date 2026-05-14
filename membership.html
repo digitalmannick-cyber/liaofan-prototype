@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>开通会员 - 了凡修行</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --xuan-paper: #F7F4EF; --xuan-warm: #EDE9E2; --xuan-dark: #E5E0D8;
+  --ink: #1A1A1A; --ink-light: #4A4A48; --ink-muted: #8C8C88;
+  --cinnabar: #B85450; --cinnabar-soft: #F0E0DE;
+  --gold: #C9A96E; --gold-soft: #F5F0E3;
+  --moss: #4A6741; --moss-soft: #E0E8DD;
+}
+body { font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; background: var(--xuan-paper); color: var(--ink); min-height: 100vh; padding-bottom: 100px; }
+
+.vip-hero { text-align: center; padding: 48px 20px 40px; }
+.vip-icon { width: 80px; height: 80px; background: linear-gradient(135deg,#C9A96E 0%,#B8944F 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 4px 16px rgba(201,169,110,0.3); }
+.vip-crown { width: 40px; height: 28px; background: white; clip-path: polygon(50% 0%,100% 40%,85% 100%,15% 100%,0% 40%); }
+.vip-hero .title { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+.vip-hero .subtitle { font-size: 13px; color: var(--ink-muted); }
+
+.benefits { margin: 0 20px 24px; }
+.benefits .title { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-left: 4px; }
+.benefit-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.benefit-card { padding: 24px 16px; background: linear-gradient(135deg,#FAF8F5 0%,#F5F3EF 100%); border: 1.5px solid var(--xuan-dark); border-radius: 12px; text-align: center; }
+.benefit-card .icon { font-size: 32px; margin-bottom: 12px; }
+.benefit-card .name { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+.benefit-card .desc { font-size: 11px; color: var(--ink-muted); }
+
+.plans { margin: 0 20px 24px; }
+.plans .title { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-left: 4px; }
+.plan-list { display: flex; gap: 16px; }
+.plan-card { flex: 1; padding: 28px 20px; background: linear-gradient(135deg,#FAF8F5 0%,#F5F3EF 100%); border: 1.5px solid var(--xuan-dark); border-radius: 12px; text-align: center; position: relative; cursor: pointer; transition: all 0.3s; }
+.plan-card.selected { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(201,169,110,0.2); }
+.plan-badge { position: absolute; top: -1px; right: -1px; padding: 4px 12px; background: var(--gold); color: white; font-size: 10px; font-weight: 600; border-radius: 0 12px 0 8px; }
+.plan-badge.best { background: var(--cinnabar); }
+.plan-name { font-size: 15px; font-weight: 600; margin-bottom: 16px; }
+.plan-price { margin-bottom: 12px; }
+.price-symbol { font-size: 16px; font-weight: 600; }
+.price-num { font-size: 40px; font-weight: 700; line-height: 1; }
+.price-unit { font-size: 12px; color: var(--ink-muted); }
+.plan-desc { font-size: 11px; color: var(--ink-muted); margin-bottom: 12px; }
+.plan-tag { display: inline-block; padding: 4px 10px; background: var(--cinnabar-soft); color: var(--cinnabar); font-size: 10px; font-weight: 600; border-radius: 8px; }
+
+.pay-section { margin: 0 20px; padding: 24px; background: linear-gradient(135deg,#FAF8F5 0%,#F5F3EF 100%); border: 1.5px solid var(--xuan-dark); border-radius: 12px; }
+.pay-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1.5px solid var(--xuan-dark); }
+.pay-label { font-size: 15px; font-weight: 600; }
+.pay-price { font-size: 32px; font-weight: 700; color: var(--cinnabar); }
+.pay-btn { width: 100%; padding: 16px; background: var(--ink); color: var(--xuan-paper); font-size: 16px; font-weight: 600; border: none; border-radius: 12px; text-align: center; cursor: pointer; }
+.pay-btn:active { background: var(--ink-light); transform: translateY(2px); }
+.pay-tip { text-align: center; margin-top: 16px; font-size: 11px; color: var(--ink-muted); }
+
+.tab-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(247,244,239,0.95); backdrop-filter: blur(10px); border-top: 1.5px solid var(--xuan-dark); display: flex; justify-content: space-around; padding: 8px 0 calc(8px + env(safe-area-inset-bottom)); z-index: 100; }
+.tab-item { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px 12px; color: var(--ink-muted); font-size: 11px; text-decoration: none; }
+.tab-item.active { color: var(--cinnabar); }
+.tab-icon { font-size: 22px; line-height: 1; }
+</style>
+</head>
+<body>
+
+<div class="vip-hero">
+  <div class="vip-icon"><div class="vip-crown"></div></div>
+  <div class="title">了凡会员</div>
+  <div class="subtitle">开启完整修行之旅</div>
+</div>
+
+<div class="benefits">
+  <div class="title">会员特权</div>
+  <div class="benefit-grid">
+    <div class="benefit-card"><div class="icon">📊</div><div class="name">修行报告</div><div class="desc">月度/年度数据分析</div></div>
+    <div class="benefit-card"><div class="icon">🏆</div><div class="name">排行榜</div><div class="desc">与同修道友比拼</div></div>
+    <div class="benefit-card"><div class="icon">🔖</div><div class="name">书签功能</div><div class="desc">标记四训阅读进度</div></div>
+    <div class="benefit-card"><div class="icon">✨</div><div class="name">高级统计</div><div class="desc">深度功德分析图表</div></div>
+    <div class="benefit-card"><div class="icon">📅</div><div class="name">历史回溯</div><div class="desc">查看全部历史记录</div></div>
+    <div class="benefit-card"><div class="icon">🌟</div><div class="name">专属标识</div><div class="desc">会员专属头像框</div></div>
+  </div>
+</div>
+
+<div class="plans">
+  <div class="title">选择套餐</div>
+  <div class="plan-list">
+    <div class="plan-card" id="planMonth" onclick="selectPlan('month')">
+      <div class="plan-name">月度会员</div>
+      <div class="plan-price"><span class="price-symbol">¥</span><span class="price-num">18</span><span class="price-unit">/月</span></div>
+      <div class="plan-desc">按月续费，灵活选择</div>
+    </div>
+    <div class="plan-card selected" id="planYear" onclick="selectPlan('year')">
+      <div class="plan-badge best">最省</div>
+      <div class="plan-name">年度会员</div>
+      <div class="plan-price"><span class="price-symbol">¥</span><span class="price-num">128</span><span class="price-unit">/年</span></div>
+      <div class="plan-desc">省88元，修行更持久</div>
+      <div class="plan-tag">限时特惠</div>
+    </div>
+  </div>
+</div>
+
+<div class="pay-section">
+  <div class="pay-info"><span class="pay-label">实付金额</span><span class="pay-price" id="payPrice">¥128</span></div>
+  <button class="pay-btn" onclick="handlePay()">立即开通</button>
+  <div class="pay-tip">开通即表示同意《会员服务协议》</div>
+</div>
+
+<nav class="tab-bar">
+  <a href="index.html" class="tab-item"><span class="tab-icon">◈</span><span>修行</span></a>
+  <a href="gongguo.html" class="tab-item"><span class="tab-icon">✎</span><span>功过格</span></a>
+  <a href="sixun.html" class="tab-item"><span class="tab-icon">📖</span><span>四训</span></a>
+  <a href="profile.html" class="tab-item active"><span class="tab-icon">◉</span><span>我的</span></a>
+</nav>
+
+<script>
+let selectedPlan = 'year';
+function selectPlan(plan) {
+  selectedPlan = plan;
+  document.getElementById('planMonth').classList.toggle('selected', plan === 'month');
+  document.getElementById('planYear').classList.toggle('selected', plan === 'year');
+  document.getElementById('payPrice').textContent = '¥' + (plan === 'year' ? '128' : '18');
+}
+function handlePay() {
+  const price = selectedPlan === 'year' ? 128 : 18;
+  if (confirm(`确认支付 ¥${price} 开通${selectedPlan === 'year' ? '年度' : '月度'}会员？`)) {
+    alert('演示模式：支付成功！');
+    window.location.href = 'profile.html';
+  }
+}
+</script>
+</body>
+</html>
