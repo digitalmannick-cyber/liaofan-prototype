@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>了凡修行</title>
+<style>
+/* ============================================================
+ * 了凡修行 — 国风高保真原型
+ * 宣纸水墨 + 朱砂点缀 + 原石沉稳
+ * ============================================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  /* 宣纸色系 */
+  --xuan-paper: #F7F4EF;
+  --xuan-warm: #EDE9E2;
+  --xuan-dark: #E5E0D8;
+
+  /* 国风核心色 */
+  --ink: #1A1A1A;
+  --ink-light: #4A4A48;
+  --ink-muted: #8C8C88;
+
+  --cinnabar: #B85450;
+  --cinnabar-soft: #F0E0DE;
+  --cinnabar-dark: #8B3A36;
+
+  --gold: #C9A96E;
+  --gold-soft: #F5F0E3;
+
+  --moss: #4A6741;
+  --moss-soft: #E0E8DD;
+
+  /* 水墨渐变 */
+  --ink-wash: linear-gradient(180deg, #2C2C2C 0%, #1A1A1A 100%);
+  --paper-texture: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+body {
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: var(--xuan-paper);
+  color: var(--ink);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* 宣纸纹理 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: var(--paper-texture);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+ * 顶部：品牌 + 用户信息
+ * ============================================================ */
+
+.header {
+  position: relative;
+  padding: 48px 24px 32px;
+  text-align: center;
+  z-index: 1;
+}
+
+/* 水墨装饰背景 */
+.header::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 200px;
+  background: radial-gradient(ellipse, rgba(200, 180, 160, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.brand {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 8px;
+  color: var(--ink);
+  margin-bottom: 4px;
+  position: relative;
+  display: inline-block;
+}
+
+/* 朱砂印章 */
+.brand::after {
+  content: '修行';
+  position: absolute;
+  right: -40px;
+  top: -8px;
+  width: 36px;
+  height: 36px;
+  background: var(--cinnabar);
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transform: rotate(-8deg);
+  opacity: 0.9;
+  box-shadow: 0 2px 8px rgba(184, 84, 80, 0.3);
+}
+
+.sub-brand {
+  font-size: 13px;
+  color: var(--ink-muted);
+  letter-spacing: 4px;
+  margin-bottom: 20px;
+}
+
+.user-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--ink-wash);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  font-size: 20px;
+  border: 2px solid var(--gold);
+}
+
+.user-info {
+  text-align: left;
+}
+
+.user-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.user-level {
+  font-size: 12px;
+  color: var(--cinnabar);
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.level-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--cinnabar);
+  border-radius: 50%;
+}
+
+/* ============================================================
+ * 功德树 — 核心视觉
+ * ============================================================ */
+
+.tree-section {
+  position: relative;
+  margin: 0 20px 24px;
+  padding: 28px 20px;
+  background: linear-gradient(180deg, #FAF8F5 0%, #F5F3EF 100%);
+  border: 1.5px solid var(--xuan-dark);
+  border-radius: 12px;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* 树的水墨背景 */
+.tree-section::before {
+  content: '';
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(74, 103, 65, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.tree-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.tree-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.tree-title span {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-muted);
+  margin-left: 8px;
+}
+
+.tree-stats {
+  text-align: right;
+}
+
+.tree-score {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--cinnabar);
+  line-height: 1;
+}
+
+.tree-label {
+  font-size: 11px;
+  color: var(--ink-muted);
+  margin-top: 4px;
+}
+
+/* 树的可视化 */
+.tree-visual {
+  position: relative;
+  height: 200px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.tree-trunk {
+  width: 12px;
+  height: 80px;
+  background: linear-gradient(180deg, #6B5B4F 0%, #4A3F36 100%);
+  border-radius: 6px;
+  position: relative;
+}
+
+.tree-crown {
+  position: absolute;
+  bottom: 60px;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle at 40% 60%, rgba(74, 103, 65, 0.25) 0%, rgba(74, 103, 65, 0.08) 50%, transparent 70%);
+  border-radius: 50%;
+}
+
+.tree-crown::before,
+.tree-crown::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(74, 103, 65, 0.2) 0%, transparent 70%);
+}
+
+.tree-crown::before {
+  width: 100px;
+  height: 100px;
+  top: -30px;
+  left: -20px;
+}
+
+.tree-crown::after {
+  width: 80px;
+  height: 80px;
+  top: -10px;
+  right: -30px;
+}
+
+/* 落叶装饰 */
+.leaf {
+  position: absolute;
+  font-size: 14px;
+  opacity: 0;
+  animation: leafFall 4s ease-in-out infinite;
+}
+
+.leaf:nth-child(1) { left: 20%; animation-delay: 0s; }
+.leaf:nth-child(2) { left: 50%; animation-delay: 1.3s; }
+.leaf:nth-child(3) { left: 75%; animation-delay: 2.6s; }
+
+@keyframes leafFall {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+  20% { opacity: 0.8; }
+  80% { opacity: 0.6; }
+  100% { transform: translateY(180px) rotate(360deg); opacity: 0; }
+}
+
+/* 树下功德记录 */
+.tree-merits {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.merit-pill {
+  padding: 8px 16px;
+  background: var(--xuan-paper);
+  border: 1.5px solid var(--xuan-dark);
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--ink-light);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.merit-pill .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.merit-pill.good .dot { background: var(--moss); }
+.merit-pill.bad .dot { background: var(--cinnabar); }
+
+/* ============================================================
+ * 今日功过 — 快捷记录
+ * ============================================================ */
+
+.record-section {
+  margin: 0 20px 24px;
+  z-index: 1;
+  position: relative;
+}
+
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 0 4px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.section-link {
+  font-size: 13px;
+  color: var(--cinnabar);
+}
+
+.record-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.record-card {
+  background: linear-gradient(135deg, #FAF8F5 0%, #F5F3EF 100%);
+  border: 1.5px solid var(--xuan-dark);
+  border-radius: 12px;
+  padding: 20px 16px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.record-card:active {
+  transform: scale(0.97);
+  background: var(--xuan-warm);
+}
+
+/* 水墨晕染效果 */
+.record-card::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(184, 84, 80, 0.1) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  transition: all 0.6s ease;
+  border-radius: 50%;
+}
+
+.record-card:active::before {
+  width: 200px;
+  height: 200px;
+}
+
+.record-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.record-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.record-desc {
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+.record-score {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.record-score.positive {
+  background: var(--moss-soft);
+  color: var(--moss);
+}
+
+.record-score.negative {
+  background: var(--cinnabar-soft);
+  color: var(--cinnabar);
+}
+
+/* ============================================================
+ * 今日三省
+ * ============================================================ */
+
+.reflect-section {
+  margin: 0 20px 24px;
+  z-index: 1;
+  position: relative;
+}
+
+.reflect-card {
+  background: linear-gradient(135deg, #FAF8F5 0%, #F5F3EF 100%);
+  border: 1.5px solid var(--xuan-dark);
+  border-radius: 12px;
+  padding: 24px 20px;
+  position: relative;
+}
+
+/* 竖排装饰文字 */
+.reflect-card::before {
+  content: '三省吾身';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  font-size: 14px;
+  color: var(--xuan-dark);
+  letter-spacing: 4px;
+  font-weight: 600;
+  opacity: 0.5;
+}
+
+.reflect-question {
+  font-size: 15px;
+  color: var(--ink-light);
+  margin-bottom: 12px;
+  padding-right: 40px;
+}
+
+.reflect-question strong {
+  color: var(--cinnabar);
+  font-weight: 600;
+}
+
+.reflect-check {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.check-btn {
+  padding: 8px 16px;
+  border: 1.5px solid var(--xuan-dark);
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--ink-light);
+  background: transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.check-btn:hover,
+.check-btn.active {
+  background: var(--ink);
+  color: white;
+  border-color: var(--ink);
+}
+
+/* ============================================================
+ * 底部导航
+ * ============================================================ */
+
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(247, 244, 239, 0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1.5px solid var(--xuan-dark);
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+  z-index: 100;
+}
+
+.tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  color: var(--ink-muted);
+  font-size: 11px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.tab-item.active {
+  color: var(--cinnabar);
+}
+
+.tab-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* ============================================================
+ * 水墨入场动画
+ * ============================================================ */
+
+.ink-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: inkReveal 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.ink-reveal-1 { animation-delay: 0.1s; }
+.ink-reveal-2 { animation-delay: 0.2s; }
+.ink-reveal-3 { animation-delay: 0.3s; }
+.ink-reveal-4 { animation-delay: 0.4s; }
+.ink-reveal-5 { animation-delay: 0.5s; }
+
+@keyframes inkReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 水墨扩散点击效果 */
+.ink-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ink-ripple::after {
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(0,0,0,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ink-ripple:active::after {
+  transform: scale(3);
+  opacity: 1;
+  transition: all 0.6s ease-out;
+}
+
+/* ============================================================
+ * 内容留白
+ * ============================================================ */
+
+.content-pad {
+  height: 100px;
+}
+</style>
+</head>
+<body>
+
+<!-- 头部 -->
+<header class="header ink-reveal ink-reveal-1">
+  <div class="brand">了凡修行</div>
+  <div class="sub-brand">命由我作 福自己求</div>
+  <div class="user-bar">
+    <div class="avatar">凡</div>
+    <div class="user-info">
+      <div class="user-name">修行者</div>
+      <div class="user-level">
+        <span class="level-dot"></span>
+        初发心 · 第 3 日
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- 功德树 -->
+<section class="tree-section ink-reveal ink-reveal-2">
+  <div class="tree-header">
+    <div class="tree-title">功德树 <span>随善行生长</span></div>
+    <div class="tree-stats">
+      <div class="tree-score">+128</div>
+      <div class="tree-label">本月功德</div>
+    </div>
+  </div>
+  <div class="tree-visual">
+    <div class="leaf">🍃</div>
+    <div class="leaf">🍂</div>
+    <div class="leaf">🍃</div>
+    <div class="tree-crown"></div>
+    <div class="tree-trunk"></div>
+  </div>
+  <div class="tree-merits">
+    <div class="merit-pill good">
+      <span class="dot"></span>
+      善事 12 件
+    </div>
+    <div class="merit-pill bad">
+      <span class="dot"></span>
+      过失 3 件
+    </div>
+  </div>
+</section>
+
+<!-- 今日功过 -->
+<section class="record-section ink-reveal ink-reveal-3">
+  <div class="section-header-row">
+    <div class="section-title">今日功过</div>
+    <div class="section-link">查看全部 →</div>
+  </div>
+  <div class="record-grid">
+    <div class="record-card ink-ripple">
+      <div class="record-score positive">+10</div>
+      <div class="record-icon">🙏</div>
+      <div class="record-name">诵经礼忏</div>
+      <div class="record-desc">诵经一卷或礼忏百拜</div>
+    </div>
+    <div class="record-card ink-ripple">
+      <div class="record-score positive">+5</div>
+      <div class="record-icon">🤝</div>
+      <div class="record-name">与人为善</div>
+      <div class="record-desc">真心助人一次</div>
+    </div>
+    <div class="record-card ink-ripple">
+      <div class="record-score positive">+3</div>
+      <div class="record-icon">💰</div>
+      <div class="record-name">舍财作福</div>
+      <div class="record-desc">布施或捐赠</div>
+    </div>
+    <div class="record-card ink-ripple">
+      <div class="record-score negative">-3</div>
+      <div class="record-icon">😤</div>
+      <div class="record-name">嗔心起</div>
+      <div class="record-desc">发脾气或抱怨</div>
+    </div>
+  </div>
+</section>
+
+<!-- 今日三省 -->
+<section class="reflect-section ink-reveal ink-reveal-4">
+  <div class="section-header-row">
+    <div class="section-title">今日三省</div>
+  </div>
+  <div class="reflect-card">
+    <div class="reflect-question">今日有<strong>改过</strong>吗？</div>
+    <div class="reflect-check">
+      <button class="check-btn">觉察过失</button>
+      <button class="check-btn active">已作忏悔</button>
+      <button class="check-btn">未犯过失</button>
+    </div>
+  </div>
+</section>
+
+<div class="content-pad"></div>
+
+<!-- 底部导航 -->
+<nav class="tab-bar">
+  <div class="tab-item active">
+    <span class="tab-icon">◈</span>
+    <span>修行</span>
+  </div>
+  <div class="tab-item">
+    <span class="tab-icon">✎</span>
+    <span>功过格</span>
+  </div>
+  <div class="tab-item">
+    <span class="tab-icon">📖</span>
+    <span>四训</span>
+  </div>
+  <div class="tab-item">
+    <span class="tab-icon">◉</span>
+    <span>我的</span>
+  </div>
+</nav>
+
+<script>
+// 点击反馈
+document.querySelectorAll('.check-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    this.parentElement.querySelectorAll('.check-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// 模拟功德树生长
+document.querySelectorAll('.record-card').forEach(card => {
+  card.addEventListener('click', function() {
+    const score = document.querySelector('.tree-score');
+    const current = parseInt(score.textContent);
+    const isPositive = this.querySelector('.record-score.positive');
+    const add = isPositive ? 10 : -3;
+    score.textContent = (current + add > 0 ? '+' : '') + (current + add);
+    score.style.transform = 'scale(1.2)';
+    score.style.transition = 'transform 0.3s ease';
+    setTimeout(() => score.style.transform = 'scale(1)', 300);
+  });
+});
+</script>
+
+</body>
+</html>

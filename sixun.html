@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>了凡四训 - 了凡修行</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --xuan-paper: #F7F4EF;
+  --xuan-warm: #EDE9E2;
+  --xuan-dark: #E5E0D8;
+  --ink: #1A1A1A;
+  --ink-light: #4A4A48;
+  --ink-muted: #8C8C88;
+  --cinnabar: #B85450;
+  --cinnabar-soft: #F0E0DE;
+  --moss: #4A6741;
+  --gold: #C9A96E;
+  --gold-soft: #F5F0E3;
+}
+
+body {
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: var(--xuan-paper);
+  color: var(--ink);
+  line-height: 1.6;
+  min-height: 100vh;
+  padding-bottom: 100px;
+}
+
+/* 顶部 */
+.header {
+  padding: 40px 24px 20px;
+  text-align: center;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  margin-bottom: 4px;
+}
+
+.page-subtitle {
+  font-size: 13px;
+  color: var(--ink-muted);
+  letter-spacing: 2px;
+}
+
+/* 篇章切换 */
+.chapter-tabs {
+  display: flex;
+  margin: 0 20px 24px;
+  background: #FAF8F5;
+  border: 1.5px solid var(--xuan-dark);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.chapter-tab {
+  flex: 1;
+  padding: 12px 4px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-muted);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.chapter-tab.active {
+  background: var(--ink);
+  color: var(--xuan-paper);
+  font-weight: 600;
+}
+
+.chapter-tab:not(:last-child) {
+  border-right: 1.5px solid var(--xuan-dark);
+}
+
+/* 音频播放器 */
+.audio-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0 20px 24px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #FAF8F5 0%, #F5F3EF 100%);
+  border: 1.5px solid var(--xuan-dark);
+  border-radius: 12px;
+}
+
+.audio-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--xuan-paper);
+  border: none;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.audio-info {
+  flex: 1;
+}
+
+.audio-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.audio-time {
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+.audio-progress {
+  width: 100%;
+  height: 3px;
+  background: var(--xuan-dark);
+  border-radius: 2px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.audio-progress-inner {
+  width: 35%;
+  height: 100%;
+  background: var(--cinnabar);
+  border-radius: 2px;
+}
+
+/* 正文区域 */
+.content {
+  margin: 0 20px;
+  background: linear-gradient(135deg, #FAF8F5 0%, #F5F3EF 100%);
+  border: 1.5px solid var(--xuan-dark);
+  border-radius: 12px;
+  padding: 28px 24px;
+  position: relative;
+}
+
+/* 竖排章节标记 */
+.content::before {
+  content: '立命';
+  position: absolute;
+  right: 16px;
+  top: 28px;
+  writing-mode: vertical-rl;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cinnabar);
+  letter-spacing: 6px;
+  opacity: 0.6;
+}
+
+.chapter-number {
+  font-size: 12px;
+  color: var(--cinnabar);
+  font-weight: 600;
+  margin-bottom: 8px;
+  letter-spacing: 2px;
+}
+
+.chapter-heading {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1.5px solid var(--xuan-dark);
+}
+
+/* 文言文 */
+.classical-text {
+  font-size: 16px;
+  line-height: 2;
+  color: var(--ink);
+  margin-bottom: 24px;
+  text-align: justify;
+}
+
+.classical-text p {
+  margin-bottom: 16px;
+  text-indent: 2em;
+}
+
+/* 白话翻译 */
+.modern-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--ink-light);
+  padding: 20px;
+  background: var(--xuan-warm);
+  border-radius: 8px;
+  border-left: 3px solid var(--gold);
+}
+
+.modern-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 8px;
+  letter-spacing: 2px;
+}
+
+.modern-text p {
+  margin-bottom: 12px;
+}
+
+/* 金句高亮 */
+.highlight-quote {
+  margin: 24px 0;
+  padding: 20px;
+  background: var(--gold-soft);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.highlight-quote .quote-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.6;
+  letter-spacing: 1px;
+}
+
+.highlight-quote .quote-source {
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-top: 8px;
+}
+
+/* 翻页 */
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 24px 20px;
+}
+
+.nav-btn {
+  padding: 10px 20px;
+  background: transparent;
+  border: 1.5px solid var(--xuan-dark);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--ink-light);
+  cursor: pointer;
+}
+
+.nav-btn.primary {
+  background: var(--ink);
+  color: var(--xuan-paper);
+  border-color: var(--ink);
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="page-title">了凡四训</div>
+  <div class="page-subtitle">明 · 袁了凡 著</div>
+</div>
+
+<div class="chapter-tabs">
+  <button class="chapter-tab active">立命</button>
+  <button class="chapter-tab">改过</button>
+  <button class="chapter-tab">积善</button>
+  <button class="chapter-tab">谦德</button>
+</div>
+
+<div class="audio-bar">
+  <button class="audio-btn">▶</button>
+  <div class="audio-info">
+    <div class="audio-title">立命之学 · 第一讲</div>
+    <div class="audio-time">12:34 / 36:00</div>
+    <div class="audio-progress">
+      <div class="audio-progress-inner"></div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="chapter-number">第一篇</div>
+  <div class="chapter-heading">立命之学</div>
+
+  <div class="classical-text">
+    <p>余童年丧父，老母命弃举业学医，谓可以养生，可以济人，且习一艺以成名，尔父夙心也。</p>
+    <p>后余在慈云寺，遇一老者，修髯伟貌，飘飘若仙。余敬礼之。语余曰：「子仕路中人也，明年即进学，何不读书？」</p>
+    <p>余告以故，并叩老者姓氏里居。曰：「吾姓孔，云南人也。得邵子皇极数正传，数该传汝。」</p>
+  </div>
+
+  <div class="highlight-quote">
+    <div class="quote-text">「命由我作，福自己求。」</div>
+    <div class="quote-source">—— 了凡四训 · 立命之学</div>
+  </div>
+
+  <div class="modern-text">
+    <div class="modern-label">白话译文</div>
+    <p>我童年时父亲就去世了，母亲让我放弃科举考试去学医，说这样可以养活自己，也可以救济别人，而且学好一门手艺就能成名，这也是你父亲生前的心愿。</p>
+    <p>后来我在慈云寺，遇到一位老人，胡须修长，相貌堂堂，飘然若仙。我恭敬地向他行礼。他对我说：「你是做官的人，明年就能考取秀才，为什么不读书呢？」</p>
+  </div>
+</div>
+
+<div class="page-nav">
+  <button class="nav-btn">← 上一篇</button>
+  <button class="nav-btn primary">下一篇 →</button>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>功过格 - 了凡修行</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --xuan-paper: #F7F4EF;
+  --xuan-warm: #EDE9E2;
+  --xuan-dark: #E5E0D8;
+  --ink: #1A1A1A;
+  --ink-light: #4A4A48;
+  --ink-muted: #8C8C88;
+  --cinnabar: #B85450;
+  --cinnabar-soft: #F0E0DE;
+  --moss: #4A6741;
+  --moss-soft: #E0E8DD;
+  --gold: #C9A96E;
+  --gold-soft: #F5F0E3;
+}
+
+body {
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: var(--xuan-paper);
+  color: var(--ink);
+  line-height: 1.5;
+  min-height: 100vh;
+  padding-bottom: 100px;
+}
+
+/* 顶部 */
+.header {
+  padding: 40px 24px 24px;
+  text-align: center;
+  border-bottom: 1.5px solid var(--xuan-dark);
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  margin-bottom: 4px;
+}
+
+.page-date {
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+/* 今日总分 */
+.score-bar {
+  display: flex;
+  justify-content: space-around;
+  padding: 24px;
+  margin: 20px;
+  background: linear-gradient(135deg, #FAF8F5 0%, #F5F3EF 100%);
+  border: 1.5px solid var(--xuan-dark);
+  border-radius: 12px;
+}
+
+.score-item {
+  text-align: center;
+}
+
+.score-num {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.score-num.positive { color: var(--moss); }
+.score-num.negative { color: var(--cinnabar); }
+.score-num.total { color: var(--ink); }
+
+.score-label {
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-top: 8px;
+}
+
+/* 功过列表 */
+.section {
+  margin: 0 20px 24px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-left: 8px;
+  border-left: 3px solid var(--cinnabar);
+}
+
+.section-title.good {
+  border-left-color: var(--moss);
+}
+
+.gongguo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gongguo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: #FAF8F5;
+  border: 1.5px solid var(--xuan-dark);
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.gongguo-item:active {
+  transform: scale(0.98);
+  background: var(--xuan-warm);
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-name {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.item-desc {
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+.item-score {
+  font-size: 14px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 16px;
+  margin-right: 12px;
+}
+
+.item-score.positive {
+  background: var(--moss-soft);
+  color: var(--moss);
+}
+
+.item-score.negative {
+  background: var(--cinnabar-soft);
+  color: var(--cinnabar);
+}
+
+.item-count {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.count-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid var(--xuan-dark);
+  background: transparent;
+  font-size: 18px;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.count-btn:active {
+  background: var(--ink);
+  color: white;
+}
+
+.count-value {
+  font-size: 16px;
+  font-weight: 700;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* 提交按钮 */
+.submit-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(247, 244, 239, 0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1.5px solid var(--xuan-dark);
+  padding: 16px 24px calc(16px + env(safe-area-inset-bottom));
+  display: flex;
+  gap: 12px;
+  z-index: 100;
+}
+
+.btn-primary {
+  flex: 1;
+  background: var(--ink);
+  color: #F5F3EF;
+  border: none;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.btn-secondary {
+  flex: 1;
+  background: transparent;
+  color: var(--ink);
+  border: 2px solid var(--xuan-dark);
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="page-title">功过格</div>
+  <div class="page-date">乙巳年 四月十七 · 今日记录</div>
+</div>
+
+<div class="score-bar">
+  <div class="score-item">
+    <div class="score-num positive">+45</div>
+    <div class="score-label">功</div>
+  </div>
+  <div class="score-item">
+    <div class="score-num total">+32</div>
+    <div class="score-label">总分</div>
+  </div>
+  <div class="score-item">
+    <div class="score-num negative">-13</div>
+    <div class="score-label">过</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title good">积功</div>
+  <div class="gongguo-list">
+    <div class="gongguo-item">
+      <div class="item-info">
+        <div class="item-name">诵经礼忏</div>
+        <div class="item-desc">诵经一卷或礼忏百拜</div>
+      </div>
+      <div class="item-count">
+        <div class="item-score positive">+1</div>
+        <button class="count-btn">-</button>
+        <div class="count-value">2</div>
+        <button class="count-btn">+</button>
+      </div>
+    </div>
+    <div class="gongguo-item">
+      <div class="item-info">
+        <div class="item-name">赞一人善</div>
+        <div class="item-desc">真心称赞他人善行</div>
+      </div>
+      <div class="item-count">
+        <div class="item-score positive">+1</div>
+        <button class="count-btn">-</button>
+        <div class="count-value">1</div>
+        <button class="count-btn">+</button>
+      </div>
+    </div>
+    <div class="gongguo-item">
+      <div class="item-info">
+        <div class="item-name">救人危急</div>
+        <div class="item-desc">济一人饥、救一人寒</div>
+      </div>
+      <div class="item-count">
+        <div class="item-score positive">+10</div>
+        <button class="count-btn">-</button>
+        <div class="count-value">0</div>
+        <button class="count-btn">+</button>
+      </div>
+    </div>
+    <div class="gongguo-item">
+      <div class="item-info">
+        <div class="item-name">劝人为善</div>
+        <div class="item-desc">劝息一人争、开导迷途</div>
+      </div>
+      <div class="item-count">
+        <div class="item-score positive">+5</div>
+        <button class="count-btn">-</button>
+        <div class="count-value">3</div>
+        <button class="count-btn">+</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">记过</div>
+  <div class="gongguo-list">
+    <div class="gongguo-item">
+      <div class="item-info">
+        <div class="item-name">嗔心起</div>
+        <div class="item-desc">发脾气、怨恨他人</div>
+      </div>
+      <div class="item-count">
+        <div class="item-score negative">-3</div>
+        <button class="count-btn">-</button>
+        <div class="count-value">1</div>
+        <button class="count-btn">+</button>
+      </div>
+    </div>
+    <div class="gongguo-item">
+      <div class="item-info">
+        <div class="item-name">言语伤人</div>
+        <div class="item-desc">恶语中伤、搬弄是非</div>
+      </div>
+      <div class="item-count">
+        <div class="item-score negative">-5</div>
+        <button class="count-btn">-</button>
+        <div class="count-value">0</div>
+        <button class="count-btn">+</button>
+      </div>
+    </div>
+    <div class="gongguo-item">
+      <div class="item-info">
+        <div class="item-name">见善不为</div>
+        <div class="item-desc">见危急不救、见恶不阻</div>
+      </div>
+      <div class="item-count">
+        <div class="item-score negative">-1</div>
+        <button class="count-btn">-</button>
+        <div class="count-value">2</div>
+        <button class="count-btn">+</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="submit-bar">
+  <button class="btn-secondary">重置</button>
+  <button class="btn-primary">记录今日</button>
+</div>
+
+</body>
+</html>
