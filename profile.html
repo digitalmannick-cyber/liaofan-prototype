@@ -52,6 +52,17 @@ body { font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-seri
 .menu-tag { padding: 4px 10px; background: var(--gold-soft); color: var(--gold); font-size: 10px; font-weight: 600; border-radius: 8px; margin-right: 12px; }
 .menu-arrow { font-size: 14px; color: var(--ink-muted); }
 
+.badge-section { margin: 0 20px 24px; padding: 24px 20px; background: linear-gradient(135deg,#FAF8F5 0%,#F5F3EF 100%); border: 1.5px solid var(--xuan-dark); border-radius: 12px; }
+.badge-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.badge-title { font-size: 18px; font-weight: 700; }
+.badge-count { font-size: 12px; color: var(--ink-muted); }
+.badge-list { display: flex; flex-wrap: wrap; gap: 16px; }
+.badge-item { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 12px; border-radius: 12px; width: calc(20% - 13px); min-width: 60px; }
+.badge-item.locked { opacity: 0.4; filter: grayscale(1); }
+.badge-item.unlocked { background: var(--gold-soft); border: 1.5px solid var(--gold); }
+.badge-icon { font-size: 28px; line-height: 1; }
+.badge-name { font-size: 11px; text-align: center; }
+
 .tab-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(247,244,239,0.95); backdrop-filter: blur(10px); border-top: 1.5px solid var(--xuan-dark); display: flex; justify-content: space-around; padding: 8px 0 calc(8px + env(safe-area-inset-bottom)); z-index: 100; }
 .tab-item { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px 12px; color: var(--ink-muted); font-size: 11px; text-decoration: none; }
 .tab-item.active { color: var(--cinnabar); }
@@ -96,7 +107,26 @@ body { font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-seri
   </div>
 </div>
 
-<a href="membership.html" class="vip-banner" style="text-decoration:none">
+<div class="badge-section">
+  <div class="badge-header">
+    <div class="badge-title">修行成就</div>
+    <div class="badge-count">已解锁 3/10</div>
+  </div>
+  <div class="badge-list">
+    <div class="badge-item unlocked"><div class="badge-icon">◈</div><div class="badge-name">初发心</div></div>
+    <div class="badge-item unlocked"><div class="badge-icon">🌱</div><div class="badge-name">日行一善</div></div>
+    <div class="badge-item unlocked"><div class="badge-icon">✎</div><div class="badge-name">改过迁善</div></div>
+    <div class="badge-item locked"><div class="badge-icon">🌳</div><div class="badge-name">积善成德</div></div>
+    <div class="badge-item locked"><div class="badge-icon">◉</div><div class="badge-name">七日精进</div></div>
+    <div class="badge-item locked"><div class="badge-icon">💎</div><div class="badge-name">百福骈臻</div></div>
+    <div class="badge-item locked"><div class="badge-icon">👑</div><div class="badge-name">五福临门</div></div>
+    <div class="badge-item locked"><div class="badge-icon">☯</div><div class="badge-name">知行合一</div></div>
+    <div class="badge-item locked"><div class="badge-icon">✨</div><div class="badge-name">善满三千</div></div>
+    <div class="badge-item locked"><div class="badge-icon">◎</div><div class="badge-name">三十日不退</div></div>
+  </div>
+</div>
+
+<a href="/liaofan-prototype/membership.html" class="vip-banner" style="text-decoration:none">
   <div>
     <div class="vip-title">开通会员</div>
     <div class="vip-desc">解锁高级统计与更多功能</div>
@@ -121,6 +151,16 @@ body { font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-seri
       <div class="menu-text"><span class="menu-title">排行榜</span><span class="menu-desc">与同修道友共同进步</span></div>
       <div class="menu-arrow">→</div>
     </a>
+    <a href="#" class="menu-item" onclick="alert('功能开发中');return false">
+      <div class="menu-icon" style="background:var(--gold-soft)"><div class="dot" style="background:var(--gold)"></div></div>
+      <div class="menu-text"><span class="menu-title">许愿墙</span><span class="menu-desc">写下心愿，祈福向善</span></div>
+      <div class="menu-arrow">→</div>
+    </a>
+    <a href="#" class="menu-item" onclick="alert('功能开发中');return false">
+      <div class="menu-icon" style="background:var(--moss-soft)"><div class="dot" style="background:var(--moss)"></div></div>
+      <div class="menu-text"><span class="menu-title">同修道场</span><span class="menu-desc">分享心得，互相勉励</span></div>
+      <div class="menu-arrow">→</div>
+    </a>
   </div>
   <div class="menu-group">
     <a href="#" class="menu-item" onclick="alert('了凡修行 v1.0.0\n\n「命由我作，福自己求」\n\n愿每一位修行者都能在日行一善中，改变命运，积累福德。');return false">
@@ -135,7 +175,7 @@ body { font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-seri
   <a href="/liaofan-prototype/index.html" class="tab-item"><span class="tab-icon">◈</span><span>修行</span></a>
   <a href="/liaofan-prototype/gongguo.html" class="tab-item"><span class="tab-icon">✎</span><span>功过格</span></a>
   <a href="/liaofan-prototype/sixun.html" class="tab-item"><span class="tab-icon">📖</span><span>四训</span></a>
-  <a href="profile.html" class="tab-item active"><span class="tab-icon">◉</span><span>我的</span></a>
+  <a href="/liaofan-prototype/profile.html" class="tab-item active"><span class="tab-icon">◉</span><span>我的</span></a>
 </nav>
 
 </body>

@@ -106,7 +106,7 @@ body { font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-seri
   <a href="/liaofan-prototype/index.html" class="tab-item"><span class="tab-icon">◈</span><span>修行</span></a>
   <a href="/liaofan-prototype/gongguo.html" class="tab-item"><span class="tab-icon">✎</span><span>功过格</span></a>
   <a href="/liaofan-prototype/sixun.html" class="tab-item"><span class="tab-icon">📖</span><span>四训</span></a>
-  <a href="profile.html" class="tab-item active"><span class="tab-icon">◉</span><span>我的</span></a>
+  <a href="/liaofan-prototype/profile.html" class="tab-item active"><span class="tab-icon">◉</span><span>我的</span></a>
 </nav>
 
 <script>
@@ -121,7 +121,7 @@ function handlePay() {
   const price = selectedPlan === 'year' ? 128 : 18;
   if (confirm(`确认支付 ¥${price} 开通${selectedPlan === 'year' ? '年度' : '月度'}会员？`)) {
     alert('演示模式：支付成功！');
-    window.location.href = 'profile.html';
+    window.location.href = '/liaofan-prototype/profile.html';
   }
 }
 </script>
