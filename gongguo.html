@@ -104,24 +104,43 @@ const goodRules = [
   { category: '孝顺悌道', rules: [
     { id: 'g1', name: '奉养父母', desc: '尽心照料父母起居饮食', score: 10 },
     { id: 'g2', name: '恭敬尊长', desc: '对长辈谦恭有礼', score: 5 },
-    { id: 'g3', name: '友爱兄弟', desc: '兄弟姐妹和睦相处', score: 5 }
+    { id: 'g3', name: '友爱兄弟', desc: '兄弟姐妹和睦相处', score: 5 },
+    { id: 'g3a', name: '晨昏定省', desc: '早晚向父母问安', score: 3 },
+    { id: 'g3b', name: '承顺颜色', desc: '和颜悦色侍奉父母', score: 5 }
   ]},
   { category: '仁爱济世', rules: [
     { id: 'g4', name: '救人危急', desc: '遇人危难施以援手', score: 50 },
     { id: 'g5', name: '舍财作福', desc: '布施钱财助人', score: 10 },
     { id: 'g6', name: '护持正法', desc: '弘扬善法正道', score: 30 },
-    { id: 'g7', name: '与人为善', desc: '真心助人向善', score: 5 }
+    { id: 'g7', name: '与人为善', desc: '真心助人向善', score: 5 },
+    { id: 'g7a', name: '赈济饥寒', desc: '救济贫困者衣食', score: 10 },
+    { id: 'g7b', name: '安葬无主', desc: '安葬无人认领的逝者', score: 20 },
+    { id: 'g7c', name: '施茶施药', desc: '向路人施茶或赠药', score: 5 },
+    { id: 'g7d', name: '补路修桥', desc: '修补道路桥梁方便行人', score: 10 }
   ]},
   { category: '修身律己', rules: [
     { id: 'g8', name: '诵经礼忏', desc: '诵经一卷或礼忏百拜', score: 3 },
     { id: 'g9', name: '静坐修身', desc: '每日静坐反省半小时', score: 3 },
     { id: 'g10', name: '忍辱不嗔', desc: '遇逆缘不起嗔心', score: 5 },
-    { id: 'g11', name: '断恶修善', desc: '主动改正一处过失', score: 5 }
+    { id: 'g11', name: '断恶修善', desc: '主动改正一处过失', score: 5 },
+    { id: 'g11a', name: '改过自新', desc: '深刻反省并发愿改过', score: 10 },
+    { id: 'g11b', name: '三省吾身', desc: '每日三次反省自己的言行', score: 3 },
+    { id: 'g11c', name: '戒杀放生', desc: '不杀生并放生生命', score: 5 },
+    { id: 'g11d', name: '惜字纸', desc: '珍惜写有文字的纸张', score: 2 }
+  ]},
+  { category: '诚信正直', rules: [
+    { id: 'g15', name: '守信用', desc: '履行承诺不食言', score: 5 },
+    { id: 'g16', name: '说真话', desc: '言语诚实不欺瞒', score: 3 },
+    { id: 'g17', name: '见义勇为', desc: '见到正义之事勇敢去做', score: 10 },
+    { id: 'g18', name: '代人任怨', desc: '替他人承担委屈', score: 5 },
+    { id: 'g19', name: '隐人之恶', desc: '不张扬他人的过失', score: 5 }
   ]},
   { category: '利物惜福', rules: [
     { id: 'g12', name: '爱惜物命', desc: '放生或不杀生', score: 5 },
     { id: 'g13', name: '劝人向善', desc: '劝诫他人改过迁善', score: 10 },
-    { id: 'g14', name: '成人之美', desc: '成就他人的善事', score: 5 }
+    { id: 'g14', name: '成人之美', desc: '成就他人的善事', score: 5 },
+    { id: 'g14a', name: '惜福节用', desc: '节约水电粮食物品', score: 3 },
+    { id: 'g14b', name: '拾物归还', desc: '捡到财物归还失主', score: 5 }
   ]}
 ];
 
@@ -129,24 +148,40 @@ const badRules = [
   { category: '悖逆忤道', rules: [
     { id: 'b1', name: '不孝父母', desc: '对父母言语冲撞或不敬', score: -10 },
     { id: 'b2', name: '不敬尊长', desc: '对长辈无礼傲慢', score: -5 },
-    { id: 'b3', name: '兄弟不睦', desc: '与兄弟姐妹争执', score: -5 }
+    { id: 'b3', name: '兄弟不睦', desc: '与兄弟姐妹争执', score: -5 },
+    { id: 'b3a', name: '顶撞师长', desc: '对老师或上司出言不逊', score: -5 }
   ]},
   { category: '贪嗔嫉妒', rules: [
     { id: 'b4', name: '嗔心起', desc: '发脾气或抱怨他人', score: -3 },
     { id: 'b5', name: '嫉妒障碍', desc: '嫉妒他人成就', score: -5 },
     { id: 'b6', name: '贪婪吝啬', desc: '贪图不义之财', score: -10 },
-    { id: 'b7', name: '妄语恶口', desc: '说谎或口出恶言', score: -5 }
+    { id: 'b7', name: '妄语恶口', desc: '说谎或口出恶言', score: -5 },
+    { id: 'b7a', name: '两舌离间', desc: '挑拨离间搬弄是非', score: -5 },
+    { id: 'b7b', name: '绮语邪淫', desc: '说轻浮不正经的话', score: -3 }
   ]},
   { category: '杀盗淫妄', rules: [
     { id: 'b8', name: '杀生害命', desc: '故意伤害众生', score: -20 },
     { id: 'b9', name: '偷盗侵占', desc: '取非分之财', score: -20 },
     { id: 'b10', name: '邪淫不净', desc: '行为不端', score: -20 },
-    { id: 'b11', name: '饮酒乱性', desc: '饮酒误事', score: -5 }
+    { id: 'b11', name: '饮酒乱性', desc: '饮酒误事或失态', score: -5 },
+    { id: 'b11a', name: '醉犯他人', desc: '醉酒状态下冒犯他人', score: -5 }
+  ]},
+  { category: '见死不救', rules: [
+    { id: 'b20', name: '见人危急不救', desc: '有能力救助而不施援手', score: -20 },
+    { id: 'b21', name: '见人盗物不阻', desc: '见到偷窃不加以阻止', score: -5 },
+    { id: 'b22', name: '见人饥寒不救', desc: '看到饥寒者不予救济', score: -10 },
+    { id: 'b23', name: '见人说谎不纠', desc: '明知谎言却不纠正', score: -3 }
+  ]},
+  { category: '暴弃天物', rules: [
+    { id: 'b24', name: '暴弃五谷', desc: '随意浪费粮食', score: -3 },
+    { id: 'b25', name: '损坏公物', desc: '故意破坏公共设施', score: -5 },
+    { id: 'b26', name: '铺张浪费', desc: '过度消费不知节制', score: -5 },
+    { id: 'b27', name: '负约爽信', desc: '违背承诺失信于人', score: -5 }
   ]},
   { category: '懈怠放逸', rules: [
-    { id: 'b12', name: '荒废功课', desc: '该修行时偷懒', score: -3 },
+    { id: 'b12', name: '荒废功课', desc: '该修行时偷懒懈怠', score: -3 },
     { id: 'b13', name: '见善不为', desc: '明知当行却不行', score: -5 },
-    { id: 'b14', name: '闻过不改', desc: '知错不改', score: -10 }
+    { id: 'b14', name: '闻过不改', desc: '知错不改一犯再犯', score: -10 }
   ]}
 ];
 
